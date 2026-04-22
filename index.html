@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Skill-to-Cash Map™ | Atwood & Hale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0B0B0C;
+      --black-2: #111113;
+      --black-3: #181819;
+      --white: #EAEAEA;
+      --white-dim: #9A9A9A;
+      --gold: #C6A85B;
+      --gold-dim: #8a7240;
+      --border: rgba(198,168,91,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--black);
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    section, header, footer, nav { position: relative; z-index: 1; }
+
+    /* ─── TYPOGRAPHY ─── */
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.2; }
+
+    .serif { font-family: 'Playfair Display', serif; }
+    .gold { color: var(--gold); }
+    .dim { color: var(--white-dim); }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+    .container-wide { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── NAV ─── */
+    nav {
+      padding: 28px 0 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .brand span {
+      display: block;
+      font-size: 10px;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: 0.22em;
+      color: var(--white-dim);
+      font-weight: 300;
+      margin-top: 3px;
+    }
+
+    .nav-cta {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border: 1px solid var(--gold-dim);
+      padding: 8px 20px;
+      transition: all 0.25s;
+    }
+
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 100px 0 80px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      font-weight: 900;
+      color: var(--white);
+      max-width: 680px;
+      margin: 0 auto 28px;
+      line-height: 1.1;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--white-dim);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      font-weight: 300;
+    }
+
+    .hero-price-block {
+      display: inline-block;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 40px;
+      margin-bottom: 36px;
+    }
+
+    .hero-price-block .label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 4px;
+    }
+
+    .hero-price-block .price {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 18px 52px;
+      transition: all 0.25s;
+    }
+
+    .btn-primary:hover {
+      background: #d4b86a;
+      transform: translateY(-1px);
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--white-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    /* ─── PROBLEM ─── */
+    .problem { padding: 80px 0; }
+
+    .problem-statement {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--white);
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .problem-statement strong {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .problem-list {
+      margin: 60px auto 0;
+      max-width: 560px;
+      list-style: none;
+    }
+
+    .problem-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.95rem;
+      color: var(--white-dim);
+    }
+
+    .problem-list li:last-child { border-bottom: none; }
+
+    .bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ─── AUTHORITY ─── */
+    .authority {
+      padding: 80px 0;
+      background: var(--black-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .authority-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 64px;
+      align-items: start;
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .authority-left { text-align: left; }
+
+    .authority-signature {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 24px;
+    }
+
+    .authority-title {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 6px;
+    }
+
+    .authority-img-frame {
+      width: 100%;
+      max-width: 220px;
+      aspect-ratio: 3/4;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--black-3);
+    }
+
+    .authority-img-frame-photo {
+      width: 100%;
+      height: 100%;
+      background-image: url("author.jpg");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.85;
+      filter: grayscale(20%);
+    }
+
+    .authority-right h2 {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      margin-bottom: 28px;
+      line-height: 1.3;
+    }
+
+    .authority-right p {
+      color: var(--white-dim);
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+      line-height: 1.8;
+    }
+
+    .authority-right p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0;
+    }
+
+    .skill-tag {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--border);
+      padding: 5px 14px;
+      color: var(--white-dim);
+      text-transform: uppercase;
+    }
+
+    /* ─── INSIDE ─── */
+    .inside { padding: 90px 0; }
+
+    .inside-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .inside-header h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+    }
+
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-card {
+      background: var(--black-2);
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+      transition: border-color 0.25s;
+    }
+
+    .page-card:hover { border-color: var(--gold-dim); }
+
+    .page-number {
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .page-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .page-card p {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      line-height: 1.75;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials {
+      padding: 90px 0;
+      background: var(--black-2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .testimonials-header h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .testi-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      padding: 36px 28px;
+    }
+
+    .testi-stars {
+      color: var(--gold);
+      font-size: 13px;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .testi-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .testi-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--black-2);
+      flex-shrink: 0;
+    }
+
+    .testi-avatar-photo {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(30%);
+    }
+
+    .testi-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .testi-role {
+      font-size: 11px;
+      color: var(--white-dim);
+      margin-top: 2px;
+    }
+
+    /* ─── OFFER ─── */
+    .offer {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .offer h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .offer-sub {
+      font-size: 0.95rem;
+      color: var(--white-dim);
+      max-width: 460px;
+      margin: 0 auto 48px;
+    }
+
+    .offer-box {
+      display: inline-block;
+      border: 1px solid var(--border);
+      padding: 48px 56px;
+      max-width: 480px;
+      width: 100%;
+      margin-bottom: 32px;
+    }
+
+    .offer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .offer-includes {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 32px;
+    }
+
+    .offer-includes li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--white-dim);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .offer-includes li:last-child { border-bottom: none; }
+
+    .check {
+      color: var(--gold);
+      font-size: 13px;
+    }
+
+    .offer-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .offer-price-note {
+      font-size: 12px;
+      color: var(--white-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .bonus-block {
+      border: 1px solid var(--gold-dim);
+      padding: 28px 32px;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto 32px;
+      text-align: left;
+      background: rgba(198,168,91,0.04);
+    }
+
+    .bonus-tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--black);
+      padding: 4px 12px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .bonus-block h3 {
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .bonus-block p {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      line-height: 1.75;
+    }
+
+    .secure-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--white-dim);
+      letter-spacing: 0.1em;
+      margin-top: 20px;
+    }
+
+    .lock { font-size: 13px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    /* ─── DISCLAIMER ─── */
+    .disclaimer {
+      background: var(--black-2);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .disclaimer p {
+      font-size: 11px;
+      color: var(--white-dim);
+      max-width: 680px;
+      margin: 0 auto 10px;
+      line-height: 1.75;
+      opacity: 0.65;
+    }
+
+    .disclaimer a { color: var(--white-dim); text-decoration: underline; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow  { animation: fadeUp 0.6s ease both; }
+    .hero h1       { animation: fadeUp 0.6s 0.15s ease both; }
+    .hero-sub      { animation: fadeUp 0.6s 0.28s ease both; }
+    .hero-price-block { animation: fadeUp 0.6s 0.38s ease both; }
+    .btn-primary   { animation: fadeUp 0.6s 0.48s ease both; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .authority-inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .authority-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .authority-img-frame { max-width: 160px; }
+
+      .offer-box { padding: 36px 24px; }
+
+      nav .nav-cta { display: none; }
+    }
+  </style>
+
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1407724268049550');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1407724268049550&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-inner">
+    <div class="brand">
+      Atwood &amp; Hale
+      <span>Strategic Leverage for the Digital Age</span>
+    </div>
+    <a href="https://selar.com/skilltocashmap" class="nav-cta" target="_blank" rel="noopener">Get Access — ₦3,000</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Atwood &amp; Hale Presents</p>
+    <h1>You Have the Skills.<br/><em>None of Them Are Paying You.</em></h1>
+    <p class="hero-sub">
+      A 7-day execution workbook that turns what you already know into an offer you can sell this week. No new courses. No theory. Just structure.
+    </p>
+    <div class="hero-price-block">
+      <p class="label">One-Time Investment</p>
+      <p class="price">₦3,000</p>
+    </div>
+    <br/>
+    <a href="https://selar.com/skilltocashmap" class="btn-primary" target="_blank" rel="noopener">
+      Get the Skill-to-Cash Map™
+    </a>
+    <p class="hero-note">Instant delivery via Selar &nbsp;·&nbsp; PDF Workbook &nbsp;·&nbsp; 6 Execution Pages</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── PROBLEM ─── -->
+<section class="problem">
+  <div class="container">
+    <p class="section-label" style="text-align:center;">The Real Problem</p>
+    <p class="problem-statement">
+      Your problem is <strong>not lack of skill.</strong><br/>
+      Your problem is lack of <strong>structure.</strong>
+    </p>
+
+    <ul class="problem-list">
+      <li>
+        <span class="bullet"></span>
+        <span>You bought the graphics design course. Then the copywriting course. Then the AI prompt course. Then the funnel course. You have ten skills and zero income.</span>
+      </li>
+      <li>
+        <span class="bullet"></span>
+        <span>Every new tool feels like progress. But without structure, you are simply building a very expensive hobby.</span>
+      </li>
+      <li>
+        <span class="bullet"></span>
+        <span>You are not confused about skills. You are confused about how to organize them into something a person will actually pay for.</span>
+      </li>
+      <li>
+        <span class="bullet"></span>
+        <span>You keep waiting for the right moment. The right idea. The right course. That moment will not come. Structure will.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── AUTHORITY ─── -->
+<section class="authority">
+  <div class="authority-inner">
+    <div class="authority-left">
+      <!-- Replace the background-image URL below with your actual photo URL -->
+      <div class="authority-img-frame">
+        <div class="authority-img-frame-photo"></div>
+      </div>
+      <p class="authority-signature">The Author</p>
+      <p class="authority-title">Strategic Partner,<br/>Atwood &amp; Hale</p>
+    </div>
+
+    <div class="authority-right">
+      <p class="section-label">A Word From the Author</p>
+      <h2>I Have Been<br/><em>Exactly Where You Are.</em></h2>
+
+      <p>
+        When I started out in the internet space, I was the definition of a skill collector. I learned graphics design, website design, lead generation, Blender, video editing, basic web development, marketing, landing pages, funnels, SMTP server setup, and cloud hosting.
+      </p>
+
+      <div class="skill-tags">
+        <span class="skill-tag">Graphics Design</span>
+        <span class="skill-tag">Web Dev</span>
+        <span class="skill-tag">Lead Generation</span>
+        <span class="skill-tag">Blender 3D</span>
+        <span class="skill-tag">Video Editing</span>
+        <span class="skill-tag">Funnels</span>
+        <span class="skill-tag">SMTP Setup</span>
+        <span class="skill-tag">Cloud Hosting</span>
+      </div>
+
+      <p>
+        <strong>And at the end of all of it — I made no money.</strong> Not because the skills were useless. Because I had no system. Every skill sat in isolation. Nothing connected. Nothing converted.
+      </p>
+
+      <p>
+        It wasn't until I stopped chasing the next thing and sat down to structure what I already had — that everything changed. One clear offer. One focused direction. That was all it took to go from confusion to cash.
+      </p>
+
+      <p>
+        <strong>That system is exactly what I have built into the Skill-to-Cash Map.</strong> It is not theory from a textbook. It is the exact framework I used — rebuilt into a 7-day workbook that works for anyone, regardless of what skills they have.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INSIDE THE WORKBOOK ─── -->
+<section class="inside">
+  <div class="container-wide">
+    <div class="inside-header">
+      <p class="section-label">What's Inside</p>
+      <h2>Six Pages.<br/>One Clear Direction.</h2>
+    </div>
+
+    <div class="pages-grid">
+      <div class="page-card">
+        <p class="page-number">Page 01</p>
+        <h3>Hard Reset</h3>
+        <p>Stop learning. For the next 7 days you will not consume anything new. You will only use what you already have. This page sets the rules of engagement.</p>
+      </div>
+
+      <div class="page-card">
+        <p class="page-number">Page 02</p>
+        <h3>Skill Inventory</h3>
+        <p>Most people underestimate what they know. This exercise removes that blindness. No filtering. No judgment. Volume first — clarity later.</p>
+      </div>
+
+      <div class="page-card">
+        <p class="page-number">Page 03</p>
+        <h3>Skill Filter</h3>
+        <p>This is where most people fail — they keep everything and stay confused. You apply three pressure questions and cut everything that doesn't make the cut.</p>
+      </div>
+
+      <div class="page-card">
+        <p class="page-number">Page 04</p>
+        <h3>Skill Stacking</h3>
+        <p>Money rarely comes from one skill. It comes from combination. You will discover your unique skill stack — the exact combination that forms your offer.</p>
+      </div>
+
+      <div class="page-card">
+        <p class="page-number">Page 05</p>
+        <h3>Offer Construction</h3>
+        <p>A skill does not make money. An offer does. You will write one clear, specific, sellable offer using a proven structure that converts.</p>
+      </div>
+
+      <div class="page-card">
+        <p class="page-number">Page 06</p>
+        <h3>Fast Cash Execution</h3>
+        <p>A day-by-day execution map — Day 1 through Day 7. You will put your offer in front of people and attempt to close your first client this week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="testimonials">
+  <div class="container-wide">
+    <div class="testimonials-header">
+      <p class="section-label">What People Are Saying</p>
+      <h2>Results From<br/><em>Real People.</em></h2>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <p class="testi-stars">★★★★★</p>
+        <p class="testi-quote">
+          "I have been in digital marketing for two years. I had so many skills — Canva, copywriting, social media management — but never knew how to combine them into one offer people would pay for. The Skill Stack page alone changed everything for me. Closed my first client in 5 days."
+        </p>
+        <div class="testi-author">
+          <!-- Replace background-image URL with actual testimonial photo -->
+          <div class="testi-avatar">
+            <div class="testi-avatar-photo" style="background-image: url('testimonial-1.jpg');"></div>
+          </div>
+          <div>
+            <p class="testi-name">Chidinma O.</p>
+            <p class="testi-role">Freelance Digital Marketer · Lagos</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <p class="testi-stars">★★★★★</p>
+        <p class="testi-quote">
+          "I thought my problem was that I needed more skills. After reading page one of this workbook, I realized that was the exact lie keeping me broke. The Offer Construction template is worth ten times what I paid. It is embarrassingly simple and it works."
+        </p>
+        <div class="testi-author">
+          <!-- Replace background-image URL with actual testimonial photo -->
+          <div class="testi-avatar">
+            <div class="testi-avatar-photo" style="background-image: url('testimonial-2.jpg');"></div>
+          </div>
+          <div>
+            <p class="testi-name">Emeka T.</p>
+            <p class="testi-role">Content Creator · Abuja</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <p class="testi-stars">★★★★★</p>
+        <p class="testi-quote">
+          "I have a poultry background and basic WhatsApp marketing skills. I never thought that combination was worth anything. The workbook showed me how to stack it into an offer. I now charge ₦25,000 per consultation to first-time poultry farmers. This thing is real."
+        </p>
+        <div class="testi-author">
+          <!-- Replace background-image URL with actual testimonial photo -->
+          <div class="testi-avatar">
+            <div class="testi-avatar-photo" style="background-image: url('testimonial-3.jpg');"></div>
+          </div>
+          <div>
+            <p class="testi-name">Blessing A.</p>
+            <p class="testi-role">Agricultural Entrepreneur · Ibadan</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OFFER ─── -->
+<section class="offer">
+  <div class="container">
+    <p class="section-label">The Investment</p>
+    <h2>Stop Waiting.<br/><em>Start Executing.</em></h2>
+    <p class="offer-sub">
+      Everything you need to go from scattered skills to one sellable offer — in seven days.
+    </p>
+
+    <div class="offer-box">
+      <p class="offer-title">Skill-to-Cash Map™</p>
+      <ul class="offer-includes">
+        <li><span class="check">✦</span> 6-page execution workbook (PDF)</li>
+        <li><span class="check">✦</span> Skill Inventory Framework</li>
+        <li><span class="check">✦</span> Skill Filter System</li>
+        <li><span class="check">✦</span> Skill Stacking Blueprint</li>
+        <li><span class="check">✦</span> Offer Construction Template</li>
+        <li><span class="check">✦</span> 7-Day Fast Cash Execution Plan</li>
+        <li><span class="check">✦</span> Access to The Execution Circle™ (Private WhatsApp Group)</li>
+      </ul>
+      <p class="offer-price">₦3,000</p>
+      <p class="offer-price-note">One-time payment &nbsp;·&nbsp; Instant delivery</p>
+      <a href="https://selar.com/skilltocashmap" class="btn-primary" style="width:100%;text-align:center;" target="_blank" rel="noopener">
+        Get Instant Access
+      </a>
+    </div>
+
+    <div class="bonus-block">
+      <span class="bonus-tag">Included Free</span>
+      <h3>The Execution Circle™</h3>
+      <p>
+        When you purchase the Skill-to-Cash Map, you are added to a private WhatsApp group — <em>The Execution Circle</em>. This is where you post your progress, ask questions, and stay accountable with others who are building alongside you. Not a broadcast channel. A live room of people doing the work.
+      </p>
+    </div>
+
+    <div class="secure-note">
+      <span class="lock">🔒</span>
+      <span>Secure checkout via Selar &nbsp;·&nbsp; Cards, Bank Transfer & USSD accepted</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-brand">Atwood &amp; Hale</p>
+    <p style="font-size:12px; color: var(--white-dim); letter-spacing:0.1em;">Strategic Leverage for the Digital Age</p>
+  </div>
+</footer>
+
+<!-- ─── DISCLAIMER ─── -->
+<div class="disclaimer">
+  <p>
+    <strong style="color:var(--white-dim);">FACEBOOK DISCLAIMER:</strong> This page is NOT endorsed by, affiliated with, or in any way officially connected to Facebook, Meta Platforms Inc., or any of its subsidiaries or affiliates. The Facebook name, logo, and related marks are registered trademarks of Meta Platforms Inc.
+  </p>
+  <p>
+    <strong style="color:var(--white-dim);">EARNINGS DISCLAIMER:</strong> Results mentioned on this page are illustrative and not guaranteed. Individual results will vary depending on effort, experience, and market conditions. This product is intended as an educational and execution tool.
+  </p>
+  <p>
+    © 2025 Atwood &amp; Hale. All rights reserved. &nbsp;|&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;|&nbsp; <a href="terms.html">Terms of Use</a>
+  </p>
+</div>
+
+</body>
+</html>
